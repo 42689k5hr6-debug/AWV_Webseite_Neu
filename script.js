@@ -1,4 +1,4 @@
-if(!document.querySelector('link[href^="enhancements.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='enhancements.css?v=20260830-8';document.head.appendChild(l)}
+if(!document.querySelector('link[href^="enhancements.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='enhancements.css?v=20260830-9';document.head.appendChild(l)}
 document.querySelectorAll('.footer-logo').forEach(img=>{img.src='assets/aw-logo.png?v=20260830-7';img.alt='AW Verwaltung'});
 const menu=document.querySelector('.menu');const nav=document.querySelector('.navlinks');menu?.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o))});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
 document.querySelectorAll('[data-year]').forEach(e=>e.textContent=new Date().getFullYear());
