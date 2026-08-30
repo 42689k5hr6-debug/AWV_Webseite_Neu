@@ -1,0 +1,1 @@
+Branding assets are generated from the original AW logo supplied for the website. Header and footer use transparent-background variants to avoid visible white boxes.
