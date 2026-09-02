@@ -1,3 +1,82 @@
+const awSchemaPath=location.pathname.split('/').pop()||'index.html';
+const awSchemaLabels={
+  'index.html':'Startseite',
+  'unternehmen.html':'Unternehmen',
+  'leistungen.html':'Leistungen',
+  'immobilien.html':'Immobilien',
+  'angebote.html':'Aktuelle Angebote',
+  'wissenswertes.html':'Wissenswertes',
+  'selbstauskunft.html':'Selbstauskunft',
+  'kontakt.html':'Kontakt',
+  'impressum.html':'Impressum',
+  'datenschutz.html':'Datenschutz'
+};
+const awSchemaUrl=awSchemaPath==='index.html'?'https://www.aw-verwaltung.de/':`https://www.aw-verwaltung.de/${awSchemaPath}`;
+const awOrganization={
+  '@type':['Organization','RealEstateAgent'],
+  '@id':'https://www.aw-verwaltung.de/#organization',
+  name:'AW Verwaltungs GmbH & Co. KG',
+  alternateName:'AW Verwaltung',
+  url:'https://www.aw-verwaltung.de/',
+  logo:{'@type':'ImageObject',url:'https://www.aw-verwaltung.de/assets/aw-logo.png'},
+  image:'https://www.aw-verwaltung.de/assets/aw-preview.jpg',
+  email:'info@aw-verwaltung.de',
+  telephone:'+49-861-4307',
+  address:{
+    '@type':'PostalAddress',
+    streetAddress:'Bahnweg 16',
+    postalCode:'83278',
+    addressLocality:'Traunstein',
+    addressCountry:'DE'
+  },
+  areaServed:[
+    {'@type':'City',name:'Traunstein'},
+    {'@type':'AdministrativeArea',name:'Chiemgau'}
+  ],
+  openingHoursSpecification:[{
+    '@type':'OpeningHoursSpecification',
+    dayOfWeek:['Monday','Tuesday','Wednesday','Thursday','Friday'],
+    opens:'08:00',
+    closes:'12:00'
+  }],
+  knowsAbout:['Hausverwaltung','Objektverwaltung','Mietverwaltung','Technische Verwaltung','Kaufmännische Verwaltung','Mietwohnungen','Büroflächen','Gewerbeimmobilien','Garagen und Stellplätze']
+};
+const awSchemaGraph=[
+  awOrganization,
+  {
+    '@type':'WebSite',
+    '@id':'https://www.aw-verwaltung.de/#website',
+    url:'https://www.aw-verwaltung.de/',
+    name:'AW Verwaltung',
+    publisher:{'@id':'https://www.aw-verwaltung.de/#organization'},
+    inLanguage:'de-DE'
+  },
+  {
+    '@type':'WebPage',
+    '@id':`${awSchemaUrl}#webpage`,
+    url:awSchemaUrl,
+    name:document.title,
+    isPartOf:{'@id':'https://www.aw-verwaltung.de/#website'},
+    about:{'@id':'https://www.aw-verwaltung.de/#organization'},
+    inLanguage:'de-DE'
+  }
+];
+if(awSchemaPath!=='index.html'){
+  awSchemaGraph.push({
+    '@type':'BreadcrumbList',
+    '@id':`${awSchemaUrl}#breadcrumb`,
+    itemListElement:[
+      {'@type':'ListItem',position:1,name:'Startseite',item:'https://www.aw-verwaltung.de/'},
+      {'@type':'ListItem',position:2,name:awSchemaLabels[awSchemaPath]||document.title,item:awSchemaUrl}
+    ]
+  });
+}
+document.querySelectorAll('script[type="application/ld+json"]').forEach(s=>s.remove());
+const awSchemaScript=document.createElement('script');
+awSchemaScript.type='application/ld+json';
+awSchemaScript.textContent=JSON.stringify({'@context':'https://schema.org','@graph':awSchemaGraph});
+document.head.appendChild(awSchemaScript);
+
 if(!document.querySelector('link[href^="enhancements.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='enhancements.css?v=20260830-9';document.head.appendChild(l)}
 document.querySelectorAll('.footer-logo').forEach(img=>{img.src='assets/aw-logo.png?v=20260830-7';img.alt='AW Verwaltung'});
 const menu=document.querySelector('.menu');const nav=document.querySelector('.navlinks');menu?.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o))});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
