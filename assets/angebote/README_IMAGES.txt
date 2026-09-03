@@ -1,1 +1,0 @@
-Bilddateien werden in hoher Auflösung aus den Originalaufnahmen verwendet.
