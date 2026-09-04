@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Canonical host and HTTPS
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^www\.aw-verwaltung\.de$ [NC]
+RewriteRule ^ https://www.aw-verwaltung.de%{REQUEST_URI} [R=301,L]
+
+# Canonical homepage: /index.html -> /
+RewriteCond %{THE_REQUEST} \s/+index\.html[?\s] [NC]
+RewriteRule ^index\.html$ https://www.aw-verwaltung.de/ [R=301,L]
+
+# Keep existing files and directories accessible as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
