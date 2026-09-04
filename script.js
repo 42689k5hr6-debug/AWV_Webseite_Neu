@@ -79,12 +79,14 @@ awSchemaScript.type='application/ld+json';
 awSchemaScript.textContent=JSON.stringify({'@context':'https://schema.org','@graph':awSchemaGraph});
 document.head.appendChild(awSchemaScript);
 
-const awFavicon='assets/aw-logo.png?v=20260904-5';
+const awFavicon='assets/favicon-aw.svg?v=20260904-6';
 let awIcon=document.querySelector('link[rel="icon"]');
-if(!awIcon){awIcon=document.createElement('link');awIcon.rel='icon';awIcon.type='image/png';document.head.appendChild(awIcon)}
+if(!awIcon){awIcon=document.createElement('link');awIcon.rel='icon';document.head.appendChild(awIcon)}
+awIcon.type='image/svg+xml';
 awIcon.href=awFavicon;
 let awShortcut=document.querySelector('link[rel="shortcut icon"]');
 if(!awShortcut){awShortcut=document.createElement('link');awShortcut.rel='shortcut icon';document.head.appendChild(awShortcut)}
+awShortcut.type='image/svg+xml';
 awShortcut.href=awFavicon;
 
 if(!document.querySelector('link[href^="enhancements.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='enhancements.css?v=20260830-9';document.head.appendChild(l)}
