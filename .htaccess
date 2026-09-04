@@ -1,13 +1,30 @@
 RewriteEngine On
 
-# Canonical host and HTTPS
+# Canonical homepage in one hop: /index.html -> https://www.aw-verwaltung.de/
+RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
+RewriteRule ^index\.html$ https://www.aw-verwaltung.de/ [R=301,L,NE]
+
+# Canonical host and HTTPS in one hop
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} !^www\.aw-verwaltung\.de$ [NC]
-RewriteRule ^ https://www.aw-verwaltung.de%{REQUEST_URI} [R=301,L]
+RewriteRule ^ https://www.aw-verwaltung.de%{REQUEST_URI} [R=301,L,NE]
 
-# Canonical homepage: /index.html -> /
-RewriteCond %{THE_REQUEST} \s/+index\.html[?\s] [NC]
-RewriteRule ^index\.html$ https://www.aw-verwaltung.de/ [R=301,L]
+# Compression for text-based assets
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Sensible browser caching; versioned asset URLs still allow immediate refreshes
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresDefault "access plus 1 day"
+</IfModule>
 
 # Keep existing files and directories accessible as-is
 RewriteCond %{REQUEST_FILENAME} -f [OR]
