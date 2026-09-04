@@ -5,6 +5,7 @@ const awSchemaLabels={
   'leistungen.html':'Leistungen',
   'immobilien.html':'Immobilien',
   'angebote.html':'Aktuelle Angebote',
+  '3-zimmer-wohnung-traunstein.html':'3-Zimmer-Wohnung Traunstein',
   'wissenswertes.html':'Wissenswertes',
   'selbstauskunft.html':'Selbstauskunft',
   'kontakt.html':'Kontakt',
@@ -71,11 +72,20 @@ if(awSchemaPath!=='index.html'){
     ]
   });
 }
-document.querySelectorAll('script[type="application/ld+json"]').forEach(s=>s.remove());
+document.getElementById('aw-schema')?.remove();
 const awSchemaScript=document.createElement('script');
+awSchemaScript.id='aw-schema';
 awSchemaScript.type='application/ld+json';
 awSchemaScript.textContent=JSON.stringify({'@context':'https://schema.org','@graph':awSchemaGraph});
 document.head.appendChild(awSchemaScript);
+
+const awFavicon='assets/aw-logo.png?v=20260904-5';
+let awIcon=document.querySelector('link[rel="icon"]');
+if(!awIcon){awIcon=document.createElement('link');awIcon.rel='icon';awIcon.type='image/png';document.head.appendChild(awIcon)}
+awIcon.href=awFavicon;
+let awShortcut=document.querySelector('link[rel="shortcut icon"]');
+if(!awShortcut){awShortcut=document.createElement('link');awShortcut.rel='shortcut icon';document.head.appendChild(awShortcut)}
+awShortcut.href=awFavicon;
 
 if(!document.querySelector('link[href^="enhancements.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='enhancements.css?v=20260830-9';document.head.appendChild(l)}
 document.querySelectorAll('.footer-logo').forEach(img=>{img.src='assets/aw-logo.png?v=20260830-7';img.alt='AW Verwaltung'});
