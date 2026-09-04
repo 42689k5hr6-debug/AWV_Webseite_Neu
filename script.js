@@ -79,7 +79,7 @@ awSchemaScript.type='application/ld+json';
 awSchemaScript.textContent=JSON.stringify({'@context':'https://schema.org','@graph':awSchemaGraph});
 document.head.appendChild(awSchemaScript);
 
-const awFavicon='assets/favicon-aw.svg?v=20260904-6';
+const awFavicon='assets/favicon-aw.svg?v=20260904-7';
 let awIcon=document.querySelector('link[rel="icon"]');
 if(!awIcon){awIcon=document.createElement('link');awIcon.rel='icon';document.head.appendChild(awIcon)}
 awIcon.type='image/svg+xml';
